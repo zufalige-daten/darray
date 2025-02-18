@@ -14,8 +14,8 @@ typedef struct{
 	uint8_t array[];
 } darray_t;
 
-#define _forceinline __attribute__((always_inline))
-int _forceinline darray_grow(darray_t **array, size_t count){
+#define _forceinline inline __attribute__((always_inline))
+_forceinline int darray_grow(darray_t **array, size_t count){
 	*array = (darray_t *)realloc(*array, sizeof(**array) + (((*array)->length + count) * (*array)->unit));
 
 	if(*array == NULL)
@@ -25,7 +25,7 @@ int _forceinline darray_grow(darray_t **array, size_t count){
 	return 0;
 }
 
-int _forceinline darray_shrink(darray_t **array, size_t count){
+_forceinline int darray_shrink(darray_t **array, size_t count){
 	*array = (darray_t *)realloc(*array, sizeof(**array) + (((*array)->length - count) * (*array)->unit));
 
 	if(*array == NULL)
@@ -35,7 +35,7 @@ int _forceinline darray_shrink(darray_t **array, size_t count){
 	return 0;
 }
 
-darray_t * _forceinline darray_new(size_t unit){
+_forceinline darray_t * darray_new(size_t unit){
 	darray_t *ret;
 
 	ret = (darray_t *)malloc(sizeof(darray_t));
@@ -48,7 +48,7 @@ darray_t * _forceinline darray_new(size_t unit){
 	return ret;
 }
 
-int _forceinline darray_delete(darray_t **array){
+_forceinline int darray_delete(darray_t **array){
 	if(*array == NULL)
 		return 1;
 
@@ -57,7 +57,7 @@ int _forceinline darray_delete(darray_t **array){
 	return 0;
 }
 
-int _forceinline darray_add(darray_t **array, void *item){
+_forceinline int darray_add(darray_t **array, void *item){
 	int status;
 
 	if(*array == NULL)
@@ -71,7 +71,7 @@ int _forceinline darray_add(darray_t **array, void *item){
 	return 0;
 }
 
-int _forceinline darray_insert(darray_t **array, uintptr_t index, void *item){
+_forceinline int darray_insert(darray_t **array, uintptr_t index, void *item){
 	size_t grow_size;
 	int status;
 
@@ -95,7 +95,7 @@ int _forceinline darray_insert(darray_t **array, uintptr_t index, void *item){
 	return 0;
 }
 
-int _forceinline darray_remove(darray_t **array, uintptr_t index){
+_forceinline int darray_remove(darray_t **array, uintptr_t index){
 	int status;
 
 	if(*array == NULL)
@@ -113,7 +113,7 @@ int _forceinline darray_remove(darray_t **array, uintptr_t index){
 	return 0;
 }
 
-int _forceinline darray_set(darray_t **array, uintptr_t index, void *item){
+_forceinline int darray_set(darray_t **array, uintptr_t index, void *item){
 	if(*array == NULL)
 		return 1;
 
@@ -124,7 +124,7 @@ int _forceinline darray_set(darray_t **array, uintptr_t index, void *item){
 	return 0;
 }
 
-void * _forceinline darray_get(darray_t **array, uintptr_t index){
+_forceinline void *darray_get(darray_t **array, uintptr_t index){
 	if(*array == NULL)
 		return NULL;
 
